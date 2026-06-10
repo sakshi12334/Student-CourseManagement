@@ -76,6 +76,56 @@ docs/
 
 ## OOP Concepts Demonstrated
 
+## Class Diagram
+
+Below is a UML-style class diagram (Mermaid) showing the main classes and their relationships in this project.
+
+```mermaid
+classDiagram
+    Person <|-- Student
+    Student "1" o-- "0..*" Enrollment : enrollments
+    Course "1" o-- "0..*" Enrollment : enrollments
+    Enrollment --> Student : student
+    Enrollment --> Course : course
+
+    class Person {
+        -String id
+        -String firstName
+        -String lastName
+        -String email
+    }
+    class Student {
+        -String batch
+        -boolean active
+    }
+    class Course {
+        -String id
+        -String name
+        -String description
+        -int durationWeeks
+        -CourseStatus status
+    }
+    class Enrollment {
+        -String id
+        -String studentId
+        -String courseId
+        -LocalDate enrolledOn
+        -EnrollmentStatus status
+    }
+    class StudentRepository
+    class CourseRepository
+    class EnrollmentRepository
+
+    StudentService --> StudentRepository
+    CourseService --> CourseRepository
+    EnrollmentService --> EnrollmentRepository
+
+    IdGenerator <.. Main : uses
+    InputValidator <.. Main : uses
+    AppConstants <.. Main : uses
+    MenuOptions <.. Main : uses
+```
+
 ### 1. **Inheritance**
 - `Student` class extends `Person` base class
 - Demonstrates use of `super()` keyword
